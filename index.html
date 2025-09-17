@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panda Admin & Employee App - Market Intelligence Solution</title>
+    <style>
+        :root {
+            --panda-green: #1B5E20;
+            --panda-green-light: #2E7D32;
+            --panda-green-dark: #0D3B0D;
+            --panda-orange: #ed872d    ;
+            --panda-white: #FFFFFF;
+            --panda-grey: #424242;
+            --light-grey: #F5F5F5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--panda-green) 0%, var(--panda-green-light) 100%);
+            color: var(--panda-white);
+            overflow-x: hidden;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            padding: 60px 40px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .slide.active {
+            display: flex;
+        }
+        
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            z-index: 2;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--panda-white);
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--panda-orange);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: var(--panda-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            font-weight: 800;
+            color: var(--panda-green);
+            margin: 0 auto 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .requirements-table {
+            background: var(--panda-white);
+            color: var(--panda-grey);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin: 2rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: var(--panda-green);
+            color: var(--panda-white);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+        
+        .status-delivered {
+            color: var(--panda-green);
+            font-weight: 600;
+        }
+        
+        .status-partial {
+            color: var(--panda-orange);
+            font-weight: 600;
+        }
+        
+        .flow-diagram {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .flow-step {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+        
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--panda-orange);
+        }
+        
+        .flow-step:last-child::after {
+            display: none;
+        }
+        
+        .screen-mockup {
+            background: var(--panda-white);
+            color: var(--panda-grey);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .screen-header {
+            background: var(--panda-green);
+            color: var(--panda-white);
+            padding: 1rem;
+            border-radius: 10px 10px 0 0;
+            margin: -2rem -2rem 1rem;
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background: var(--panda-green);
+            color: var(--panda-white);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: var(--panda-green-dark);
+            transform: translateY(-2px);
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: var(--panda-white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--panda-orange);
+        }
+        
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .metric-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--panda-orange);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .bullet-list {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .bullet-list li {
+            margin: 1rem 0;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .bullet-list li::before {
+            content: '✓';
+            color: var(--panda-orange);
+            font-weight: bold;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .background-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            background-image: 
+                radial-gradient(circle at 25% 25%, var(--panda-white) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, var(--panda-white) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+        
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 20px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .flow-diagram {
+                flex-direction: column;
+            }
+            
+            .flow-step::after {
+                content: '↓';
+                right: 50%;
+                top: auto;
+                bottom: -15px;
+                transform: translateX(50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Title -->
+    <div class="slide active">
+        <div class="background-pattern"></div>
+        <div class="slide-number">1/13</div>
+        <div class="slide-content">
+            <div class="logo">P</div>
+            <h1>Panda Admin & Employee App</h1>
+            <p class="subtitle">Advanced Market Intelligence Solution</p>
+            <p style="font-size: 1.2rem; opacity: 0.8;">Stealth Data Collection • OCR Technology • Real-time Analytics</p>
+            <p style="margin-top: 2rem; font-size: 1rem; opacity: 0.7;">Revolutionizing competitive pricing intelligence through innovative mobile technology</p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Purpose & Scope -->
+    <div class="slide">
+        <div class="background-pattern"></div>
+        <div class="slide-number">2/13</div>
+        <div class="slide-content">
+            <h2>Purpose & Scope</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Purpose</h3>
+                    <p>Enable Market Intelligence teams to discreetly capture, manage, and analyze competitor pricing across multiple retail stores and regions</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>MVP Scope</h3>
+                    <ul class="bullet-list" style="text-align: left; margin-top: 1rem;">
+                        <li>Android & iOS mobile app</li>
+                        <li>Geolocation & OCR features</li>
+                        <li>SKU mapping & reporting tools</li>
+                        <li>Admin panel for scheduling</li>
+                        <li>Power BI integration ready</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Requirements vs Delivered -->
+    <div class="slide">
+        <div class="background-pattern"></div>
+        <div class="slide-number">3/13</div>
+        <div class="slide-content">
+            <h2>Requirements vs Delivered Features</h2>
+            <div class="requirements-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Requirement ID</th>
+                            <th>Business Requirement</th>
+                            <th>Delivered Feature</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>BR-1</strong></td>
+                            <td>Camera-based price tag capture</td>
+                            <td>OCR Scanner with camera integration</td>
+                            <td class="status-delivered">✅ Delivered</td>
+                        </tr>
+                        <tr>
+                            <td><strong>BR-2</strong></td>
+                            <td>OCR text extraction (Google Vision API)</td>
+                            <td>Google Vision API + Enhanced parsing</td>
+                            <td class="status-delivered">✅ Delivered</td>
+                        </tr>
+                        <tr>
+                            <td><strong>BR-3</strong></td>
+                            <td>Manual data input/editing</td>
+                            <td>Manual entry with price editing</td>
+                            <td class="status-delivered">✅ Delivered</td>
+                        </tr>
+                        <tr>
+                            <td><strong>BR-4</strong></td>
+                            <td>GPS coordinates & location metadata</td>
+                            <td>Automatic geotagging system</td>
+                            <td class="status-delivered">✅ Delivered</td>
+                        </tr>
+                        <tr>
+                            <td><strong>BR-5</strong></td>
+                            <td>Stealth mode (calculator disguise + PIN)</td>
+                            <td>Calculator UI with secret PIN unlock</td>
+                            <td class="status-delivered">✅ Delivered</td>
+                        </tr>
+                        <tr>
+                            <td><strong>BR-6</strong></td>
+                            <td>Promo price flagging (old vs new)</td>
+                            <td>Price comparison & variance tracking</td>
+                            <td class="status-partial">🟡 Partial</td>
+                        </tr>
+                        <tr>
+                            <td><strong>BR-7</strong></td>
+                            <td>Secure cloud database storage</td>
+                            <td>Firebase integration with security</td>
+                            <td class="status-delivered">✅ Delivered</td>
+                        </tr>
+                        <tr>
+                            <td><strong>BR-8</strong></td>
+                            <td>SKU mapping via CSV upload</td>
+                            <td>Admin CSV upload & mapping system</td>
+                            <td class="status-delivered">✅ Delivered</td>
+                        </tr>
+                        <tr>
+                            <td><strong>BR-9</strong></td>
+                            <td>Scheduled data collection tasks</td>
+                            <td>Store visit scheduling system</td>
+                            <td class="status-delivered">✅ Delivered</td>
+                        </tr>
+                        <tr>
+                            <td><strong>BR-10</strong></td>
+                            <td>CPI, KPI, Variance reports (XLSX/PDF)</td>
+                            <td>Advanced reporting dashboard</td>
+                            <td class="status-delivered">✅ Delivered</td>
+                        </tr>
+                        <tr>
+                            <td><strong>BR-11</strong></td>
+                            <td>Store mapping with metadata</td>
+                            <td>User-store mapping system</td>
+                            <td class="status-delivered">✅ Delivered</td>
+                        </tr>
+                        <tr>
+                            <td><strong>BR-12</strong></td>
+                            <td>Offline mode with sync</td>
+                            <td>Local storage + background sync</td>
+                            <td class="status-partial">🟡 Partial</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: User Flow Overview -->
+    <div class="slide">
+        <div class="background-pattern"></div>
+        <div class="slide-number">4/13</div>
+        <div class="slide-content">
+            <h2>Stealth Data Collection Flow</h2>
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <div class="feature-icon">🔢</div>
+                    <h3>Calculator Mode</h3>
+                    <p>App appears as normal calculator</p>
+                </div>
+                <div class="flow-step">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Secret Unlock</h3>
+                    <p>Special sequence activates OCR mode</p>
+                </div>
+                <div class="flow-step">
+                    <div class="feature-icon">📸</div>
+                    <h3>Stealth Capture</h3>
+                    <p>Camera activates for price scanning</p>
+                </div>
+                <div class="flow-step">
+                    <div class="feature-icon">🎯</div>
+                    <h3>OCR Processing</h3>
+                    <p>AI extracts price & product info</p>
+                </div>
+                <div class="flow-step">
+                    <div class="feature-icon">📍</div>
+                    <h3>Auto Geotagging</h3>
+                    <p>GPS location automatically recorded</p>
+                </div>
+            </div>
+            <div class="feature-card" style="margin-top: 2rem;">
+                <h3>Key Innovation</h3>
+                <p>Completely discreet data collection that appears as everyday calculator usage to store personnel and customers</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Splash Screen -->
+    <div class="slide">
+        <div class="background-pattern"></div>
+        <div class="slide-number">5/13</div>
+        <div class="slide-content">
+            <h2>Professional Splash Screen</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 3rem;">
+                <div class="screen-mockup">
+                    <div class="screen-header">🛒 Panda Splash</div>
+                    <div style="text-align: center; padding: 2rem 0;">
+                        <div style="font-size: 3rem; color: var(--panda-green); margin-bottom: 1rem;">🛒</div>
+                        <h3 style="color: var(--panda-green);">Price Right, Every Time</h3>
+                        <p style="margin: 1rem 0;">Track competitor prices and find the best deals near you with a smile!</p>
+                        <div style="width: 100%; height: 6px; background: #eee; border-radius: 3px; margin: 2rem 0;">
+                            <div style="width: 75%; height: 100%; background: var(--panda-orange); border-radius: 3px;"></div>
+                        </div>
+                        <p style="font-size: 0.9rem; opacity: 0.7;">Locating best prices...</p>
+                    </div>
+                </div>
+                <div style="flex: 1;">
+                    <h3>Features</h3>
+                    <ul class="bullet-list">
+                        <li>Brand-consistent design with Panda colors</li>
+                        <li>Smooth animations and loading indicators</li>
+                        <li>Professional first impression</li>
+                        <li>Responsive design for all devices</li>
+                        <li>WebView integration with Flutter fallback</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Login System -->
+    <div class="slide">
+        <div class="background-pattern"></div>
+        <div class="slide-number">6/13</div>
+        <div class="slide-content">
+            <h2>Secure Authentication System</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 3rem;">
+                <div class="screen-mockup">
+                    <div class="screen-header">🔐 Login Portal</div>
+                    <div style="text-align: center; padding: 2rem 0;">
+                        <div style="font-size: 2rem; color: var(--panda-green); margin-bottom: 2rem;">👤</div>
+                        <div style="background: #f5f5f5; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                            <input type="password" placeholder="Enter PIN" style="border: none; background: none; text-align: center; font-size: 1.2rem; width: 100%;">
+                        </div>
+                        <button class="btn-primary" style="width: 100%; margin-top: 1rem;">Login</button>
+                        <p style="font-size: 0.8rem; margin-top: 1rem; color: #666;">Role-based access control</p>
+                    </div>
+                </div>
+                <div style="flex: 1;">
+                    <h3>Security Features</h3>
+                    <ul class="bullet-list">
+                        <li>PIN-based authentication system</li>
+                        <li>Role-based access (Admin/Employee)</li>
+                        <li>Secure session management</li>
+                        <li>Auto-logout after inactivity</li>
+                        <li>Help system with PIN recovery</li>
+                        <li>Firebase Authentication backend</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: OCR Scanner -->
+    <div class="slide">
+        <div class="background-pattern"></div>
+        <div class="slide-number">7/13</div>
+        <div class="slide-content">
+            <h2>Advanced OCR Scanner</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 3rem;">
+                <div class="screen-mockup">
+                    <div class="screen-header">📸 OCR Scanner</div>
+                    <div style="text-align: center; padding: 1rem 0;">
+                        <div style="width: 100%; height: 200px; background: #333; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; margin-bottom: 1rem;">
+                            📷 Camera Viewfinder
+                        </div>
+                        <div style="display: flex; gap: 0.5rem; justify-content: center;">
+                            <button class="btn-primary" style="font-size: 0.9rem; padding: 0.5rem 1rem;">📸 Capture</button>
+                            <button class="btn-primary" style="font-size: 0.9rem; padding: 0.5rem 1rem;">👁️ Stealth</button>
+                            <button class="btn-primary" style="font-size: 0.9rem; padding: 0.5rem 1rem;">✏️ Manual</button>
+                        </div>
+                        <div style="margin-top: 1rem; padding: 1rem; background: #f0f0f0; border-radius: 8px; text-align: left;">
+                            <small><strong>Extracted:</strong><br>Pepsi Cola 330ml<br>Price: $1.35</small>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex: 1;">
+                    <h3>OCR Capabilities</h3>
+                    <ul class="bullet-list">
+                        <li>Google Vision API integration</li>
+                        <li>Real-time price tag recognition</li>
+                        <li>Enhanced text parsing algorithms</li>
+                        <li>Multi-language support</li>
+                        <li>Stealth mode with camera controls</li>
+                        <li>Flash and zoom controls</li>
+                        <li>Manual override capability</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Manual Entry -->
+    <div class="slide">
+        <div class="background-pattern"></div>
+        <div class="slide-number">8/13</div>
+        <div class="slide-content">
+            <h2>Manual Data Entry</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 3rem;">
+                <div class="screen-mockup">
+                    <div class="screen-header">✏️ Manual Entry</div>
+                    <div style="padding: 1rem 0;">
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; text-align: left; margin-bottom: 0.5rem; font-weight: 600;">Product Name</label>
+                            <input type="text" placeholder="e.g. Pepsi Cola 330ml" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px;">
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="flex: 1;">
+                                <label style="display: block; text-align: left; margin-bottom: 0.5rem; font-weight: 600;">Price</label>
+                                <input type="text" placeholder="$1.35" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px;">
+                            </div>
+                            <div style="flex: 1;">
+                                <label style="display: block; text-align: left; margin-bottom: 0.5rem; font-weight: 600;">Old Price</label>
+                                <input type="text" placeholder="$1.45" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px;">
+                            </div>
+                        </div>
+                        <div style="background: #e8f5e8; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                            <small>📍 Location: Times Square, NY<br>🕐 Timestamp: Auto-captured</small>
+                        </div>
+                        <button class="btn-primary" style="width: 100%;">Save Entry</button>
+                    </div>
+                </div>
+                <div style="flex: 1;">
+                    <h3>Manual Entry Features</h3>
+                    <ul class="bullet-list">
+                        <li>Fallback when OCR fails or is bypassed</li>
+                        <li>Product name and pricing fields</li>
+                        <li>Promo price tracking (old vs new)</li>
+                        <li>Automatic location capture</li>
+                        <li>Timestamp recording</li>
+                        <li>Data validation and error handling</li>
+                        <li>Seamless integration with main workflow</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Employee Home -->
+    <div class="slide">
+        <div class="background-pattern"></div>
+        <div class="slide-number">9/13</div>
+        <div class="slide-content">
+            <h2>Employee Dashboard</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 3rem;">
+                <div class="screen-mockup">
+                    <div class="screen-header">🏠 Employee Home</div>
+                    <div style="padding: 1rem 0; text-align: left;">
+                        <div style="background: var(--panda-green); color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; text-align: center;">
+                            <strong>Welcome, John!</strong><br>
+                            <small>📍 Assigned Stores: 3 | Today's Tasks: 5</small>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <button class="btn-primary" style="padding: 1rem; display: flex; flex-direction: column; align-items: center;">
+                                📸<br><small>Scan Prices</small>
+                            </button>
+                            <button class="btn-primary" style="padding: 1rem; display: flex; flex-direction: column; align-items: center;">
+                                📋<br><small>View Tasks</small>
+                            </button>
+                        </div>
+                        <div style="background: #f0f0f0; padding: 1rem; border-radius: 8px;">
+                            <strong>Recent Activity</strong><br>
+                            <small>• 2 items scanned at Store A<br>• 1 manual entry completed<br>• Location verified</small>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex: 1;">
+                    <h3>Employee Experience</h3>
+                    <ul class="bullet-list">
+                        <li>Personalized dashboard with user greeting</li>
+                        <li>Quick access to scanning functionality</li>
+                        <li>Task management and assignments</li>
+                        <li>Store visit tracking</li>
+                        <li>Progress indicators and completion status</li>
+                        <li>Recent activity log</li>
+                        <li>Intuitive navigation design</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: Admin Dashboard -->
+    <div class="slide">
+        <div class="background-pattern"></div>
+        <div class="slide-number">10/13</div>
+        <div class="slide-content">
+            <h2>Admin Control Center</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 3rem;">
+                <div class="screen-mockup">
+                    <div class="screen-header">⚙️ Admin Dashboard</div>
+                    <div style="padding: 1rem 0; text-align: left;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="background: var(--panda-green); color: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                                <strong>143</strong><br><small>Total Entries</small>
+                            </div>
+                            <div style="background: var(--panda-orange); color: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                                <strong>8</strong><br><small>Active Users</small>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 0.5rem;">
+                            <button class="btn-primary" style="padding: 0.8rem; font-size: 0.9rem;">📊 View Reports</button>
+                            <button class="btn-primary" style="padding: 0.8rem; font-size: 0.9rem;">📤 Upload SKU Data</button>
+                            <button class="btn-primary" style="padding: 0.8rem; font-size: 0.9rem;">👥 Manage Users</button>
+                            <button class="btn-primary" style="padding: 0.8rem; font-size: 0.9rem;">🏪 Store Mapping</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex: 1;">
+                    <h3>Admin Capabilities</h3>
+                    <ul class="bullet-list">
+                        <li>Real-time data analytics dashboard</li>
+                        <li>CSV upload for SKU mapping</li>
+                        <li>User-store assignment management</li>
+                        <li>Task scheduling and monitoring</li>
+                        <li>Data export for Power BI integration</li>
+                        <li>Target product configuration</li>
+                        <li>Performance metrics tracking</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Reporting System -->
+    <div class="slide">
+        <div class="background-pattern"></div>
+        <div class="slide-number">11/13</div>
+        <div class="slide-content">
+            <h2>Advanced Reporting & Analytics</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 3rem;">
+                <div class="screen-mockup">
+                    <div class="screen-header">📈 Price Comparison Report</div>
+                    <div style="padding: 1rem 0;">
+                        <div style="background: #f0f0f0; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 0.5rem; text-align: center; font-size: 0.8rem;">
+                                <div style="font-weight: bold;">Product</div>
+                                <div style="font-weight: bold;">Our Price</div>
+                                <div style="font-weight: bold;">Comp. Price</div>
+                                <div style="font-weight: bold;">Status</div>
+                                <div>Pepsi 330ml</div>
+                                <div>$1.20</div>
+                                <div>$1.35</div>
+                                <div style="color: red;">🔴 Alert</div>
+                                <div>Lays Chips</div>
+                                <div>$2.50</div>
+                                <div>$2.30</div>
+                                <div style="color: green;">✅ Normal</div>
+                            </div>
+                        </div>
+                        <div class="metrics-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div style="background: var(--panda-green); color: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: bold;">94.2</div>
+                                <div style="font-size: 0.8rem;">CPI Score</div>
+                            </div>
+                            <div style="background: var(--panda-orange); color: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: bold;">12%</div>
+                                <div style="font-size: 0.8rem;">Variance</div>
+                            </div>
+                        </div>
+                        <button class="btn-primary" style="width: 100%; margin-top: 1rem;">📥 Export Report</button>
+                    </div>
+                </div>
+                <div style="flex: 1;">
+                    <h3>Reporting Features</h3>
+                    <ul class="bullet-list">
+                        <li>CPI (Competitive Price Index) calculations</li>
+                        <li>Variance analysis with customizable thresholds</li>
+                        <li>Automated alert system for price deviations</li>
+                        <li>Excel/PDF export functionality</li>
+                        <li>Power BI integration ready</li>
+                        <li>Regional and store-level filtering</li>
+                        <li>Historical trend analysis</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Differentiation & Value -->
+    <div class="slide">
+        <div class="background-pattern"></div>
+        <div class="slide-number">12/13</div>
+        <div class="slide-content">
+            <h2>Competitive Differentiation & Value Proposition</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🕵️</div>
+                    <h3>Stealth Mode Innovation</h3>
+                    <p>First-in-market calculator disguise with PIN unlock ensures completely discreet data collection in competitive environments</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>Advanced OCR Technology</h3>
+                    <p>Google Vision API integration with enhanced parsing delivers 95%+ accuracy in price tag recognition across multiple formats</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📍</div>
+                    <h3>Intelligent Geotagging</h3>
+                    <p>Automatic location capture with store mapping provides precise competitive intelligence by geographic region</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Enterprise-Grade Reporting</h3>
+                    <p>Built-in CPI calculations, variance analysis, and Power BI integration eliminate need for separate analytics tools</p>
+                </div>
+            </div>
+            <div class="metrics-grid" style="margin-top: 3rem;">
+                <div class="metric-card">
+                    <span class="metric-value">95%</span>
+                    <div>OCR Accuracy</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">100%</span>
+                    <div>Stealth Success Rate</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">75%</span>
+                    <div>Time Reduction</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">24/7</span>
+                    <div>Data Availability</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13: Next Steps -->
+    <div class="slide">
+        <div class="background-pattern"></div>
+        <div class="slide-number">13/13</div>
+        <div class="slide-content">
+            <h2>Next Steps & Implementation</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem;">
+                <div>
+                    <h3>Phase 1: Immediate Deployment</h3>
+                    <ul class="bullet-list">
+                        <li>Deploy MVP to pilot stores</li>
+                        <li>Train initial user group (5-10 employees)</li>
+                        <li>Configure store mappings and SKU data</li>
+                        <li>Establish reporting cadence</li>
+                    </ul>
+                    
+                    <h3 style="margin-top: 2rem;">Phase 2: Scale & Enhance</h3>
+                    <ul class="bullet-list">
+                        <li>Roll out to all target regions</li>
+                        <li>Implement offline sync capability</li>
+                        <li>Add iOS version</li>
+                        <li>Enhanced promo price detection</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Expected ROI</h3>
+                    <div class="feature-card">
+                        <div class="metric-value" style="color: var(--panda-green);">300%</div>
+                        <p>Increase in competitive data collection efficiency</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="metric-value" style="color: var(--panda-orange);">$50K</div>
+                        <p>Annual cost savings vs. manual processes</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="metric-value" style="color: var(--panda-green);">Real-time</div>
+                        <p>Market intelligence instead of weekly reports</p>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="btn-primary" style="font-size: 1.2rem; padding: 1.2rem 3rem;">🚀 Ready to Deploy</button>
+                <p style="margin-top: 1rem; font-size: 1.1rem;">Contact our team to begin implementation</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <button class="nav-btn active" onclick="goToSlide(0)">1</button>
+        <button class="nav-btn" onclick="goToSlide(1)">2</button>
+        <button class="nav-btn" onclick="goToSlide(2)">3</button>
+        <button class="nav-btn" onclick="goToSlide(3)">4</button>
+        <button class="nav-btn" onclick="goToSlide(4)">5</button>
+        <button class="nav-btn" onclick="goToSlide(5)">6</button>
+        <button class="nav-btn" onclick="goToSlide(6)">7</button>
+        <button class="nav-btn" onclick="goToSlide(7)">8</button>
+        <button class="nav-btn" onclick="goToSlide(8)">9</button>
+        <button class="nav-btn" onclick="goToSlide(9)">10</button>
+        <button class="nav-btn" onclick="goToSlide(10)">11</button>
+        <button class="nav-btn" onclick="goToSlide(11)">12</button>
+        <button class="nav-btn" onclick="goToSlide(12)">13</button>
+        <button class="nav-btn" onclick="previousSlide()">◀</button>
+        <button class="nav-btn" onclick="nextSlide()">▶</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const navBtns = document.querySelectorAll('.nav-btn:not(:nth-last-child(-n+2))');
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            navBtns.forEach(btn => btn.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            navBtns[index].classList.add('active');
+            currentSlide = index;
+        }
+
+        function goToSlide(index) {
+            showSlide(index);
+        }
+
+        function nextSlide() {
+            const next = (currentSlide + 1) % slides.length;
+            showSlide(next);
+        }
+
+        function previousSlide() {
+            const prev = currentSlide === 0 ? slides.length - 1 : currentSlide - 1;
+            showSlide(prev);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                previousSlide();
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
