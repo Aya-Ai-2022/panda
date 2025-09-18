@@ -643,46 +643,41 @@
                     <div style="padding: 1rem 0; text-align: left;">
                         <div style="background: #059669; color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; text-align: center;">
                             <strong>Welcome, John!</strong><br>
-                            <small>📍 Assigned Stores: 3 | Today's Tasks: 5</small>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                            <button class="btn-primary" style="padding: 1rem; display: flex; flex-direction: column; align-items: center;">
-                                📸<br><small>Scan Prices</small>
-                            </button>
-                            <button class="btn-primary" style="padding: 1rem; display: flex; flex-direction: column; align-items: center;">
-                                📋<br><small>View Tasks</small>
-                            </button>
+                            <small>📍 Assigned Stores: 3 </small>
                         </div>
                         <div style="background: #F3F4F6; padding: 1rem; border-radius: 8px;">
-                            <strong>Assigned Product Cards</strong><br>
+                            <strong>Your Assigned Stores</strong><br>
                             <div style="margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                                <div style="background: #DC2626; color: white; padding: 0.5rem; border-radius: 5px; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
-                                    <span>Pepsi 330ml - Store A</span>
-                                    <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 3px;">New</span>
+                                <div style="background: #3B82F6; color: white; padding: 0.8rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease;" onclick="alert('Navigate to Store A products')">
+                                    <div style="font-weight: bold;">Store A - Metro Mall</div>
+                                    <div style="font-size: 0.75rem; opacity: 0.9;">Downtown Cairo </div>
                                 </div>
-                                <div style="background: #EAB308; color: white; padding: 0.5rem; border-radius: 5px; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
-                                    <span>Coca Cola 500ml - Store B</span>
-                                    <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 3px;">Progress</span>
+                                <div style="background: #EF4444; color: white; padding: 0.8rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease;" onclick="alert('Navigate to Store B products')">
+                                    <div style="font-weight: bold;">Store B - City Center</div>
+                                    <div style="font-size: 0.75rem; opacity: 0.9;">New Cairo </div>
                                 </div>
-                                <div style="background: #16A34A; color: white; padding: 0.5rem; border-radius: 5px; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
-                                    <span>Lays Chips - Store C</span>
-                                    <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 3px;">Complete</span>
+                                <div style="background: #F59E0B; color: white; padding: 0.8rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease;" onclick="alert('Navigate to Store C products')">
+                                    <div style="font-weight: bold;">Store C - Nile Plaza</div>
+                                    <div style="font-size: 0.75rem; opacity: 0.9;">Zamalek </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div style="flex: 1;">
-                    <h3>Employee Experience</h3>
+                    <h3>Store Selection Interface</h3>
                     <ul class="bullet-list">
-                        <li>Personalized dashboard with user greeting</li>
-                        <li>Quick access to scanning functionality</li>
-                        <li>Task management and assignments</li>
-                        <li>Store visit tracking</li>
-                        <li>Progress indicators and completion status</li>
-                        <li>Recent activity log</li>
-                        <li>Intuitive navigation design</li>
+                        <li>Color-coded stores for easy identification</li>
+                        <li>Store names with regional location info</li>
+                        <li>Tap any store to view assigned products</li>
+                        <li>Visual hierarchy with different colors</li>
+                        <li>Quick access to store-specific tasks</li>
+                        <li>Regional organization for efficiency</li>
                     </ul>
+                    <div class="feature-card" style="margin-top: 2rem;">
+                        <h3>Store Navigation Flow</h3>
+                        <p>Employee selects store → Views assigned products → Scans prices → Completes tasks</p>
+                    </div>
                 </div>
             </div>
         </div>
